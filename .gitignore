@@ -1,0 +1,35 @@
+# =========================
+# Python & Flask Junk
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+instance/
+
+# =========================
+# Virtual Environments
+# =========================
+venv/
+env/
+.venv/
+
+# =========================
+# Secrets & Configs
+# =========================
+.env
+.flaskenv
+
+# =========================
+# AI Weights & Heavy Datasets
+# =========================
+*.pth
+*.pt
+data/
+dataset/
+backend/model/weights/
+
+# =========================
+# OS & IDE Clutter
+# =========================
+.DS_Store
+.vscode/
