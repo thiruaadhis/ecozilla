@@ -1,0 +1,5 @@
+Flask==3.0.0
+torch
+torchvision
+opencv-python
+python-dotenv
