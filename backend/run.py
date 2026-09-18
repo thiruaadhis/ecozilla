@@ -1,15 +1,20 @@
+import os
 import cv2
+import time
 import torch
 import base64
 import numpy as np
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from torchvision import transforms
 from model.unet import UNet 
 
 app = Flask(__name__)
+CORS(app) # Unlocks the API for our frontend!
 
-# Initialize the Brain
+#  Initialize the Brain and Load the Memory!
 model = UNet()
+model.load_state_dict(torch.load('model/weights/ecozilla_v1.pth', weights_only=True))
 model.eval()
 
 def preprocess_image(cv_img):
@@ -20,15 +25,10 @@ def preprocess_image(cv_img):
     ])
     return transform(img_rgb).unsqueeze(0)
 
-# The Color Palette (BGR format for OpenCV)
-# Mapping our 6 classes to actual colors!
+# The Color Palette
 COLOR_MAP = np.array([
-    [128, 128, 128], # 0: Urban (Gray)
-    [0, 255, 255],   # 1: Agriculture (Yellow)
-    [255, 255, 0],   # 2: Rangeland (Cyan)
-    [0, 128, 0],     # 3: Forest (Green)
-    [255, 0, 0],     # 4: Water (Blue)
-    [139, 69, 19]    # 5: Barren (Brown)
+    [128, 128, 128], [0, 255, 255], [255, 255, 0], 
+    [0, 128, 0], [255, 0, 0], [139, 69, 19]    
 ], dtype=np.uint8)
 
 @app.route('/', methods=['GET'])
@@ -37,34 +37,49 @@ def health_check():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'image' not in request.files:
-        return jsonify({"error": "No image uploaded"}), 400
+    if 'image_t1' not in request.files or 'image_t2' not in request.files:
+        return jsonify({"error": "Missing temporal data! Need both image_t1 and image_t2"}), 400
     
-    file = request.files['image']
-    img_bytes = file.read()
-    nparr = np.frombuffer(img_bytes, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    file1 = request.files['image_t1']
+    file2 = request.files['image_t2']
     
-    input_tensor = preprocess_image(img)
+    img1 = cv2.imdecode(np.frombuffer(file1.read(), np.uint8), cv2.IMREAD_COLOR)
+    img2 = cv2.imdecode(np.frombuffer(file2.read(), np.uint8), cv2.IMREAD_COLOR)
     
+    tensor_t1 = preprocess_image(img1)
+    tensor_t2 = preprocess_image(img2)
+    
+    # Run BOTH timelines through the neural network
     with torch.no_grad():
-        output_tensor = model(input_tensor)
+        output_t1 = model(tensor_t1)
+        output_t2 = model(tensor_t2)
+        
+    pred_mask_t1 = torch.argmax(output_t1, dim=1).squeeze(0).cpu().numpy()
+    pred_mask_t2 = torch.argmax(output_t2, dim=1).squeeze(0).cpu().numpy()
     
-    # --- POST-PROCESSING MAGIC ---
-    # 1. The Argmax Crush: Get the winning class for each pixel [256, 256]
-    pred_mask = torch.argmax(output_tensor, dim=1).squeeze(0).cpu().numpy()
+    # ⚔️ THE DELTA ENGINE: Deforestation Detection Math
+    # Class 3 = Forest, Class 5 = Barren (Dirt/Logged land)
+    deforestation_zone = (pred_mask_t1 == 3) & (pred_mask_t2 == 5)
     
-    # 2. The Paint Job: Map the classes to our BGR colors
-    colored_mask = COLOR_MAP[pred_mask]
+    # Paint the Tactical Map (Black background)
+    alert_mask = np.zeros((256, 256, 3), dtype=np.uint8)
+    # Paint the destroyed forest pixels glowing RED (BGR format: [0, 0, 255])
+    alert_mask[deforestation_zone] = [0, 0, 255]
     
-    # 3. The Base64 Encode: Convert the painted image to a text string
-    _, buffer = cv2.imencode('.png', colored_mask)
-    encoded_img_string = base64.b64encode(buffer).decode('utf-8')
+    # Package the tactical map for the frontend
+    _, buffer = cv2.imencode('.png', alert_mask)
+    encoded_alert = base64.b64encode(buffer).decode('utf-8')
+    
+    # Calculate severity for the Ranger Alert System
+    total_pixels = 256 * 256
+    lost_pixels = np.sum(deforestation_zone)
+    loss_percentage = (lost_pixels / total_pixels) * 100
     
     return jsonify({
         "status": "success", 
-        "message": "Image successfully segmented and painted!",
-        "mask_base64": encoded_img_string
+        "message": "Delta Engine complete. Tactical alert map generated!",
+        "deforestation_rate": f"{loss_percentage:.2f}%",
+        "alert_mask_base64": encoded_alert
     })
 
 if __name__ == '__main__':

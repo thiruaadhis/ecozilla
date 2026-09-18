@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoZilla | Ranger Command Center</title>
+    <style>
+        body { font-family: 'Consolas', monospace; background-color: #0a0a0a; color: #00ff00; text-align: center; padding: 20px; margin: 0;}
+        .container { max-width: 900px; margin: 40px auto; background: #111; padding: 40px; border-radius: 10px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); }
+        h1 { text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; font-size: 32px;}
+        .subtitle { color: #888; font-size: 14px; margin-bottom: 40px; letter-spacing: 1px;}
+        
+        .upload-grid { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+        .upload-box { background: #1a1a1a; padding: 20px; border: 1px dashed #00ff00; width: 100%; border-radius: 5px; }
+        .upload-box h3 { margin-top: 0; color: #aaa; font-size: 16px;}
+        
+        button { background-color: #00ff00; color: #000; padding: 15px 30px; border: none; font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 3px; text-transform: uppercase; width: 100%; transition: 0.3s;}
+        button:hover { background-color: #00cc00; box-shadow: 0 0 15px #00ff00; }
+        
+        #statusText { color: #fff; margin-top: 20px; font-size: 16px; min-height: 24px;}
+        
+        .results { display: none; margin-top: 40px; padding-top: 30px; border-top: 1px solid #333; }
+        .alert-text { color: #ff3333; font-size: 28px; font-weight: bold; text-transform: uppercase; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);}
+        img { max-width: 100%; border-radius: 5px; border: 2px solid #ff3333; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>EcoZilla Matrix</h1>
+        <div class="subtitle">TACTICAL DEFORESTATION TRACKER V1.0</div>
+        
+        <div class="upload-grid">
+            <div class="upload-box">
+                <h3>[T1] PAST IMAGE</h3>
+                <input type="file" id="imageT1" accept="image/*">
+            </div>
+            <div class="upload-box">
+                <h3>[T2] PRESENT IMAGE</h3>
+                <input type="file" id="imageT2" accept="image/*">
+            </div>
+        </div>
+        
+        <button onclick="runDeltaEngine()">Initialize Delta Scan</button>
+
+        <div id="statusText">Awaiting temporal payloads...</div>
+
+        <div class="results" id="resultsPanel">
+            <div class="alert-text" id="alertRate">DEFORESTATION DETECTED: 0.00%</div>
+            <p style="color: #888; margin-bottom: 10px;">Tactical Alert Mask (Red = Forest Loss)</p>
+            <img id="alertMask" alt="Red pixels indicate forest loss">
+        </div>
+    </div>
+
+    <script>
+        async function runDeltaEngine() {
+            const t1Input = document.getElementById('imageT1');
+            const t2Input = document.getElementById('imageT2');
+            const statusText = document.getElementById('statusText');
+            const resultsPanel = document.getElementById('resultsPanel');
+            const alertRate = document.getElementById('alertRate');
+            const alertMask = document.getElementById('alertMask');
+
+            if (t1Input.files.length === 0 || t2Input.files.length === 0) {
+                statusText.innerText = "ERROR: Need both temporal payloads to run the Delta Engine";
+                statusText.style.color = "#ff3333";
+                return;
+            }
+
+            statusText.innerText = "Scanning timelines... calculating spatial delta...";
+            statusText.style.color = "#00ff00";
+            resultsPanel.style.display = "none";
+
+            const formData = new FormData();
+            formData.append('image_t1', t1Input.files[0]);
+            formData.append('image_t2', t2Input.files[0]);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    statusText.innerText = "Scan Complete. Rendering tactical map.";
+                    alertRate.innerText = `DEFORESTATION DETECTED: ${data.deforestation_rate}`;
+                    alertMask.src = "data:image/png;base64," + data.alert_mask_base64;
+                    resultsPanel.style.display = "block";
+                } else {
+                    statusText.innerText = "Matrix Error: " + data.error;
+                    statusText.style.color = "#ff3333";
+                }
+            } catch (error) {
+                statusText.innerText = "CORS Error! Ensure Flask is running on port 5000 in your terminal.";
+                statusText.style.color = "#ff3333";
+            }
+        }
+    </script>
+</body>
+</html>
