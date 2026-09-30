@@ -3,7 +3,7 @@ import torch.nn as nn
 
 # The EcoZilla Neural Network
 class UNet(nn.Module):
-    def __init__(self, in_channels=3, num_classes=6):
+    def __init__(self, in_channels=3, num_classes=7):
         super(UNet, self).__init__()
         
         # The Encoder (Compresses the image to find features)
@@ -27,6 +27,6 @@ class UNet(nn.Module):
 # Quick test to make sure the matrix accepts it
 if __name__ == "__main__":
     model = UNet()
-    dummy_input = torch.randn(1, 3, 256, 256) # Simulating our exact tensor!
+    dummy_input = torch.randn(1, 3, 512, 512) 
     output = model(dummy_input)
     print(f"Success! Model output shape: {output.shape}")
