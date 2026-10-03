@@ -9,7 +9,7 @@ from dataset import EcoZillaDataset
 
 # 1. Strict GPU Enforcement
 if not torch.cuda.is_available():
-    sys.exit("FATAL ERROR: No GPU detected! The matrix requires your RTX 4060, Aadhi. CPU training is strictly forbidden.")
+    sys.exit("FATAL ERROR: No GPU detected! The matrix requires your RTX 4060. CPU training is strictly forbidden.")
 
 device = torch.device('cuda')
 print(f"Matrix Compute Engine: {torch.cuda.get_device_name(0)} is LOCKED IN.")
