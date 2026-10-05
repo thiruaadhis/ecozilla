@@ -1,35 +1,46 @@
-# =========================
-# Python & Flask Junk
-# =========================
+# --- NEXT.JS / FRONTEND ---
+/frontend/.next/
+/frontend/out/
+/frontend/node_modules/
+/frontend/.turbo/
+
+# --- PYTHON / BACKEND / ML ---
 __pycache__/
 *.py[cod]
 *$py.class
-instance/
-
-# =========================
-# Virtual Environments
-# =========================
-venv/
-env/
+*.so
 .venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# =========================
-# Secrets & Configs
-# =========================
-.env
-.flaskenv
-
-# =========================
-# AI Weights & Heavy Datasets
-# =========================
-*.pth
+# --- MACHINE LEARNING WEIGHTS & DATASETS ---
+# Never push massive PyTorch / TensorFlow weights or raw GeoTIFF datasets to git!
 *.pt
+*.pth
+*.weights
+*.h5
+*.onnx
 data/
-dataset/
-backend/model/weights/
+datasets/
+*.tif
+*.tiff
 
-# =========================
-# OS & IDE Clutter
-# =========================
-.DS_Store
+# --- ENVIRONMENT SECRETS ---
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env*.secret
+
+# --- IDE & SYSTEM JUNK ---
 .vscode/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
