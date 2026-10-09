@@ -58,17 +58,34 @@ export default function LandingPage() {
                     userPreviewSecondaryIdentifier: "font-medium text-slate-500",
                     userPreviewMainIdentifier: "font-black uppercase tracking-tight text-[#111111]",
                     avatarBox: "border-2 border-[#111111] shadow-[2px_2px_0px_0px_#339966]",
-                    modalContent: "border-2 border-[#111111] shadow-[8px_8px_0px_0px_#339966,16px_16px_0px_0px_#111111] rounded-none",
-                    navbarButton: "hover:bg-[#F8F9FA] rounded-none text-xs font-bold uppercase tracking-widest text-[#111111]",
-                    navbar: "border-r-2 border-[#111111]",
-                    headerTitle: "text-2xl font-black tracking-tighter uppercase text-[#111111]",
-                    headerSubtitle: "text-xs font-bold tracking-widest uppercase text-[#339966]",
-                    profileSectionTitle: "text-sm font-black uppercase tracking-widest border-b-2 border-[#111111] pb-2 text-[#111111]",
-                    profileSectionPrimaryButton: "text-[#339966] hover:text-[#111111] font-bold uppercase text-xs tracking-widest transition-colors",
-                    accordionTriggerButton: "text-xs font-bold uppercase tracking-widest text-[#111111]",
-                    formButtonPrimary: "bg-[#111111] border-2 border-[#111111] hover:bg-[#339966] hover:border-[#339966] text-white text-xs font-black uppercase tracking-widest py-3 transition-all",
-                    formFieldLabel: "text-xs font-bold tracking-widest uppercase text-[#111111]",
-                    formFieldInput: "border-2 border-[#111111] py-2 px-3 focus:border-[#339966] focus:ring-0 transition-colors font-medium rounded-none",
+                    modalContent: "border-2 border-[#111111] shadow-[8px_8px_0px_0px_#339966,16px_16px_0px_0px_#111111] rounded-none bg-white",
+                    modalBackdrop: "bg-[#111111]/80 backdrop-blur-sm",
+                  }
+                }}
+                userProfileProps={{
+                  appearance: {
+                    variables: {
+                      colorPrimary: '#339966',
+                      colorBackground: '#ffffff',
+                      colorText: '#111111',
+                      colorInputBackground: '#F8F9FA',
+                      colorInputText: '#111111',
+                      borderRadius: '0px', 
+                    },
+                    elements: {
+                      card: "shadow-none border-none rounded-none bg-transparent",
+                      navbar: "border-r-2 border-[#111111] bg-[#F8F9FA]",
+                      navbarButton: "hover:bg-[#339966] hover:text-white rounded-none text-xs font-bold uppercase tracking-widest text-[#111111] transition-colors",
+                      headerTitle: "text-2xl font-black tracking-tighter uppercase text-[#111111]",
+                      headerSubtitle: "text-xs font-bold tracking-widest uppercase text-[#339966]",
+                      profileSectionTitle: "text-sm font-black uppercase tracking-widest border-b-2 border-[#111111] pb-2 text-[#111111]",
+                      profileSectionPrimaryButton: "text-[#339966] hover:text-[#111111] font-bold uppercase text-xs tracking-widest transition-colors",
+                      accordionTriggerButton: "text-xs font-bold uppercase tracking-widest text-[#111111]",
+                      formButtonPrimary: "bg-[#111111] border-2 border-[#111111] hover:bg-[#339966] hover:border-[#339966] text-white text-xs font-black uppercase tracking-widest py-3 transition-all rounded-none",
+                      formFieldLabel: "text-xs font-bold tracking-widest uppercase text-[#111111]",
+                      formFieldInput: "border-2 border-[#111111] py-2 px-3 focus:border-[#339966] focus:ring-0 transition-colors font-medium rounded-none",
+                      badge: "bg-[#339966] text-white rounded-none border-2 border-[#111111]",
+                    }
                   }
                 }}
               />
@@ -80,7 +97,7 @@ export default function LandingPage() {
       <section className="pt-48 pb-16 flex justify-center">
         <div className="px-6 w-full text-center">
           <h1 className="text-[6.5vw] font-black tracking-tighter leading-none uppercase w-full whitespace-nowrap text-[#111111]">
-            For Home <span className="text-[#339966]"> For Earth</span>
+            For Home, <span className="text-[#339966]">For Earth.</span>
           </h1>
         </div>
       </section>

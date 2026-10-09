@@ -21,16 +21,15 @@ export default function SignUpPage() {
       `}} />
       <div className="noise-bg pointer-events-none fixed inset-0 z-0 h-full w-full mix-blend-multiply" />
 
-      <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-8 pointer-events-none">
+      <div className="fixed top-0 left-0 w-screen z-50 flex justify-center pt-8 pointer-events-none">
         <nav className={`pointer-events-auto flex items-center justify-between px-8 py-4 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? "w-[85%] max-w-5xl bg-[#339966]/75 backdrop-blur-2xl rounded-full text-white shadow-[0_8px_30px_rgba(51,153,102,0.2)]" : "w-full max-w-[90rem] bg-transparent rounded-full text-[#111111]"}`}>
           <div className="flex items-center gap-2">
             <TreePine className={`w-6 h-6 transition-colors duration-1000 ${isScrolled ? 'text-white' : 'text-[#339966]'}`} />
             <span className="text-xl font-black tracking-tighter uppercase">EcoZilla</span>
           </div>
           <div className="flex items-center gap-8 text-xs font-bold tracking-widest uppercase">
-            <Link href="/" className="hover:opacity-50 transition-opacity">Return</Link>
-            <Link href="/sign-in" className={`px-6 py-2.5 rounded-full transition-colors duration-1000 ${isScrolled ? 'bg-white text-[#339966] hover:bg-[#111111] hover:text-white' : 'bg-[#111111] text-white hover:bg-[#339966]'}`}>
-              Log in
+            <Link href="/" className={`px-6 py-2.5 rounded-full transition-colors duration-1000 ${isScrolled ? 'bg-white text-[#339966] hover:bg-[#111111] hover:text-white' : 'bg-[#111111] text-white hover:bg-[#339966]'}`}>
+              Return
             </Link>
           </div>
         </nav>
@@ -52,9 +51,9 @@ export default function SignUpPage() {
               headerTitle: "text-3xl font-black tracking-tighter uppercase text-[#111111]",
               headerSubtitle: "text-xs font-bold tracking-widest uppercase text-[#339966] mb-4",
               formFieldLabel: "text-xs font-bold tracking-widest uppercase text-[#111111]",
-              formFieldInput: "border-2 border-[#111111] py-3 px-4 focus:border-[#339966] focus:ring-0 transition-colors font-medium",
+              formFieldInput: "border-2 border-[#111111] py-3 px-4 focus:border-[#339966] focus:ring-0 transition-colors font-medium rounded-none",
               formButtonPrimary: "bg-[#111111] border-2 border-[#111111] hover:bg-[#339966] hover:border-[#339966] text-white text-xs font-black uppercase tracking-widest py-4 transition-all",
-              socialButtonsBlockButton: "border-2 border-[#111111] hover:bg-[#339966] hover:text-white hover:border-[#339966] transition-all",
+              socialButtonsBlockButton: "border-2 border-[#111111] hover:bg-[#339966] hover:text-white hover:border-[#339966] transition-all rounded-none",
               socialButtonsBlockButtonText: "font-bold uppercase tracking-widest text-xs",
               dividerLine: "bg-[#111111]/20",
               dividerText: "text-[10px] font-black uppercase tracking-widest text-slate-400",
