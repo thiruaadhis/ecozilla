@@ -33,6 +33,18 @@ export default function DashboardPage() {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
+    
+    // Support coordinate deep linking from landing page
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const urlLat = params.get('lat');
+      const urlLng = params.get('lng');
+      if (urlLat && urlLng) {
+        setAimCoords({ lat: urlLat, lng: urlLng });
+        setTargetMapCoords({ lat: parseFloat(urlLat), lng: parseFloat(urlLng), zoom: 12 });
+      }
+    }
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -153,9 +165,7 @@ export default function DashboardPage() {
                 variables: {
                   colorPrimary: '#339966',
                   colorBackground: '#ffffff',
-                  colorText: '#111111',
                   colorInputBackground: '#F8F9FA',
-                  colorInputText: '#111111',
                   borderRadius: '0px', 
                 } as any,
                 elements: {
@@ -164,12 +174,43 @@ export default function DashboardPage() {
                   userButtonPopoverActionButtonText: "font-bold tracking-widest text-xs uppercase text-[#111111]",
                   userButtonPopoverActionButtonIcon: "text-[#339966]",
                   userButtonPopoverFooter: "border-t-2 border-[#111111] p-4 bg-[#F8F9FA]",
-                  badge: "bg-[#339966] text-white rounded-none border-2 border-[#111111]",
+                  badge: "bg-[#339966] text-white rounded-none border border-[#111111]",
                   userPreviewSecondaryIdentifier: "font-medium text-slate-500",
                   userPreviewMainIdentifier: "font-black uppercase tracking-tight text-[#111111]",
                   avatarBox: `border-2 ${isScrolled ? 'border-white' : 'border-[#111111] shadow-[2px_2px_0px_0px_#339966]'} rounded-full bg-white transition-all`,
                   modalContent: "border-2 border-[#111111] shadow-[8px_8px_0px_0px_#339966,16px_16px_0px_0px_#111111] rounded-none bg-white",
                   modalBackdrop: "bg-[#111111]/80 backdrop-blur-sm",
+                }
+              }}
+              userProfileProps={{
+                appearance: {
+                  variables: {
+                    colorPrimary: '#339966',
+                    colorBackground: '#ffffff',
+                    colorInputBackground: '#F8F9FA',
+                    borderRadius: '0px',
+                  } as any,
+                  elements: {
+                    card: "shadow-none border-none rounded-none bg-transparent",
+                    scrollBox: "bg-white",
+                    navbar: "border-r-2 border-[#111111] bg-[#F8F9FA] p-4",
+                    navbarButton: "hover:bg-[#111111] hover:text-white rounded-none text-xs font-bold uppercase tracking-widest text-[#111111] transition-all p-3 mb-1",
+                    headerTitle: "text-2xl font-black tracking-tighter uppercase text-[#111111]",
+                    headerSubtitle: "text-xs font-bold tracking-widest uppercase text-[#339966]",
+                    profileSection: "border-2 border-[#111111] shadow-[4px_4px_0px_0px_#111111] rounded-none p-5 mb-6 bg-white",
+                    profileSectionTitle: "text-xs font-black uppercase tracking-widest border-b-2 border-[#111111] pb-2 mb-4 text-[#111111]",
+                    profileSectionPrimaryButton: "text-[#339966] hover:text-[#111111] font-bold uppercase text-xs tracking-widest transition-colors",
+                    accordionTriggerButton: "text-xs font-bold uppercase tracking-widest text-[#111111] border-2 border-[#111111] rounded-none shadow-[2px_2px_0px_0px_#111111] hover:bg-[#339966] hover:text-white p-3",
+                    formButtonPrimary: "bg-[#111111] border-2 border-[#111111] hover:bg-[#339966] hover:border-[#111111] text-white text-xs font-black uppercase tracking-widest py-3 px-6 transition-all rounded-none shadow-[4px_4px_0px_0px_#339966]",
+                    formButtonReset: "bg-white border-2 border-[#111111] hover:bg-[#F8F9FA] text-[#111111] text-xs font-black uppercase tracking-widest py-3 px-6 rounded-none",
+                    formFieldLabel: "text-xs font-bold tracking-widest uppercase text-[#111111]",
+                    formFieldInput: "border-2 border-[#111111] py-2.5 px-3 focus:border-[#339966] focus:ring-0 transition-colors font-medium rounded-none bg-white",
+                    badge: "bg-[#339966] text-white rounded-none border border-[#111111] text-[10px] font-bold tracking-widest uppercase px-2 py-0.5",
+                    modalCloseButton: "border-2 border-[#111111] rounded-none hover:bg-[#339966] hover:text-white text-[#111111] shadow-[2px_2px_0px_0px_#111111]",
+                    menuButton: "border-2 border-[#111111] rounded-none hover:bg-[#339966] hover:text-white text-[#111111]",
+                    menuList: "border-2 border-[#111111] shadow-[4px_4px_0px_0px_#111111] rounded-none bg-white",
+                    menuItem: "font-bold text-xs uppercase tracking-wider hover:bg-[#F8F9FA]",
+                  }
                 }
               }}
             />

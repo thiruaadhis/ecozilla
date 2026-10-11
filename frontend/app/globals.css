@@ -12,3 +12,336 @@
 .delay-100 { animation-delay: 100ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
+
+/* =========================================================================
+   CLERK USER PROFILE & SECURITY MODAL THEME OVERRIDES (ECOZILLA BRUTALIST LEAF THEME)
+   ========================================================================= */
+
+/* Modal Content & Backdrop */
+.cl-modalBackdrop {
+  background-color: rgba(17, 17, 17, 0.85) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.cl-modalContent {
+  border: 2px solid #111111 !important;
+  box-shadow: 8px 8px 0px 0px #339966, 16px 16px 0px 0px #111111 !important;
+  border-radius: 0px !important;
+  background-color: #ffffff !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Botanical Leaf Border across the top of Profile & Security Modal */
+.cl-modalContent::before {
+  content: "" !important;
+  display: block !important;
+  width: 100% !important;
+  height: 20px !important;
+  background-color: #F8F9FA !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 24' fill='%23339966'%3E%3Cpath d='M16 6c-7 2-8.5 7-10 11l1.5.5.8-1.8c.4.1.8.2 1.1.2 9-1.5 11.5-12 11.5-12-1 1.5-6.5 1.8-10.5 2.5S5 10 5 11.5s1.4 3 1.4 3C8.5 8 16 6 16 6z' transform='rotate(12 14 12)'/%3E%3Cpath d='M44 5c-7 2-8.5 7-10 11l1.5.5.8-1.8c.4.1.8.2 1.1.2 9-1.5 11.5-12 11.5-12-1 1.5-6.5 1.8-10.5 2.5S33 9 33 10.5s1.4 3 1.4 3C36.5 7 44 5 44 5z' transform='rotate(-18 42 12)'/%3E%3C/svg%3E") !important;
+  background-repeat: repeat-x !important;
+  background-size: 52px 20px !important;
+  background-position: center !important;
+  border-bottom: 2px solid #111111 !important;
+}
+
+/* Modal Close Button */
+.cl-modalCloseButton {
+  top: 26px !important;
+  right: 18px !important;
+  background-color: #ffffff !important;
+  border: 2px solid #111111 !important;
+  border-radius: 0px !important;
+  color: #111111 !important;
+  box-shadow: 2px 2px 0px 0px #111111 !important;
+  transition: all 0.15s ease !important;
+}
+
+.cl-modalCloseButton:hover {
+  background-color: #339966 !important;
+  color: #ffffff !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 3px 3px 0px 0px #111111 !important;
+}
+
+/* Navbar / Sidebar in Profile & Security Modal */
+.cl-navbar {
+  border-right: 2px solid #111111 !important;
+  background-color: #F8F9FA !important;
+  padding: 1rem 0.5rem !important;
+}
+
+.cl-navbarButton {
+  border-radius: 0px !important;
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  color: #111111 !important;
+  padding: 10px 14px !important;
+  margin-bottom: 6px !important;
+  border: 1px solid transparent !important;
+  transition: all 0.15s ease !important;
+}
+
+.cl-navbarButton:hover {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+
+.cl-navbarButton[data-active="true"] {
+  background-color: #339966 !important;
+  color: #ffffff !important;
+  border: 2px solid #111111 !important;
+  box-shadow: 3px 3px 0px 0px #111111 !important;
+}
+
+.cl-navbarButton[data-active="true"] svg,
+.cl-navbarButton:hover svg {
+  color: #ffffff !important;
+}
+
+/* Scroll content container */
+.cl-scrollBox {
+  background-color: #ffffff !important;
+}
+
+/* Modal Page Headers */
+.cl-header {
+  border-bottom: 2px solid #111111 !important;
+  padding-bottom: 1rem !important;
+  margin-bottom: 1.5rem !important;
+  position: relative !important;
+}
+
+.cl-header::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  bottom: -9px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 14px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 16' fill='%23339966'%3E%3Cpath d='M10 4c-5 1.5-6.5 5.5-7.5 9l1.1.4.6-1.4c.3.1.6.2.8.2 6.5-1.2 8.5-9 8.5-9-.7 1.1-4.8 1.4-7.8 1.9S2 7 2 8s1.1 2.2 1.1 2.2C4.5 5.5 10 4 10 4z' transform='rotate(8 10 8)'/%3E%3Cpath d='M30 4c-5 1.5-6.5 5.5-7.5 9l1.1.4.6-1.4c.3.1.6.2.8.2 6.5-1.2 8.5-9 8.5-9-.7 1.1-4.8 1.4-7.8 1.9S22 7 22 8s1.1 2.2 1.1 2.2C24.5 5.5 30 4 30 4z' transform='rotate(-8 30 8)'/%3E%3C/svg%3E") !important;
+  background-repeat: repeat-x !important;
+  background-size: 32px 14px !important;
+  opacity: 0.8 !important;
+  pointer-events: none !important;
+}
+
+.cl-headerTitle {
+  font-weight: 900 !important;
+  letter-spacing: -0.04em !important;
+  text-transform: uppercase !important;
+  color: #111111 !important;
+  font-size: 1.5rem !important;
+}
+
+.cl-headerSubtitle {
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #339966 !important;
+  font-size: 11px !important;
+  margin-top: 2px !important;
+}
+
+/* Profile and Security Sections */
+.cl-profileSection,
+.cl-securitySection {
+  border: 2px solid #111111 !important;
+  border-radius: 0px !important;
+  padding: 1.25rem !important;
+  margin-bottom: 1.5rem !important;
+  background-color: #ffffff !important;
+  box-shadow: 4px 4px 0px 0px #111111 !important;
+  position: relative !important;
+}
+
+.cl-profileSectionTitle,
+.cl-securitySectionTitle {
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  border-bottom: 2px solid #111111 !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 1rem !important;
+  color: #111111 !important;
+  font-size: 12px !important;
+}
+
+.cl-profileSectionSubtitle,
+.cl-securitySectionSubtitle {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Primary Action Buttons inside Profile/Security */
+.cl-formButtonPrimary {
+  background-color: #111111 !important;
+  border: 2px solid #111111 !important;
+  color: #ffffff !important;
+  border-radius: 0px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  box-shadow: 3px 3px 0px 0px #339966 !important;
+  transition: all 0.15s ease !important;
+}
+
+.cl-formButtonPrimary:hover {
+  background-color: #339966 !important;
+  border-color: #111111 !important;
+  color: #ffffff !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 4px 4px 0px 0px #111111 !important;
+}
+
+.cl-formButtonReset {
+  background-color: #ffffff !important;
+  border: 2px solid #111111 !important;
+  color: #111111 !important;
+  border-radius: 0px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  transition: all 0.15s ease !important;
+}
+
+.cl-formButtonReset:hover {
+  background-color: #F8F9FA !important;
+}
+
+.cl-profileSectionPrimaryButton {
+  color: #339966 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-size: 11px !important;
+  transition: color 0.15s ease !important;
+}
+
+.cl-profileSectionPrimaryButton:hover {
+  color: #111111 !important;
+}
+
+/* Form Inputs */
+.cl-formFieldInput {
+  border: 2px solid #111111 !important;
+  border-radius: 0px !important;
+  background-color: #ffffff !important;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  padding: 8px 12px !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.cl-formFieldInput:focus {
+  border-color: #339966 !important;
+  outline: none !important;
+  box-shadow: 2px 2px 0px 0px #339966 !important;
+}
+
+.cl-formFieldLabel {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-size: 11px !important;
+  color: #111111 !important;
+}
+
+/* Badges (Primary, Verified, Active) */
+.cl-badge {
+  background-color: #339966 !important;
+  color: #ffffff !important;
+  border: 1px solid #111111 !important;
+  border-radius: 0px !important;
+  font-weight: 800 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  padding: 2px 6px !important;
+}
+
+/* Accordions and Security Action Cards */
+.cl-accordionTriggerButton {
+  border: 2px solid #111111 !important;
+  border-radius: 0px !important;
+  background-color: #F8F9FA !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-size: 11px !important;
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
+  box-shadow: 2px 2px 0px 0px #111111 !important;
+  transition: all 0.15s ease !important;
+}
+
+.cl-accordionTriggerButton:hover {
+  background-color: #ffffff !important;
+  border-color: #339966 !important;
+  color: #339966 !important;
+}
+
+.cl-accordionContent {
+  border: 2px solid #111111 !important;
+  border-top: none !important;
+  border-radius: 0px !important;
+  padding: 12px 16px !important;
+  margin-top: -8px !important;
+  margin-bottom: 12px !important;
+  background-color: #ffffff !important;
+}
+
+/* Active Devices & Session Items */
+.cl-activeDeviceListItem {
+  border: 2px solid #111111 !important;
+  border-radius: 0px !important;
+  padding: 12px !important;
+  margin-bottom: 8px !important;
+  background-color: #ffffff !important;
+  box-shadow: 2px 2px 0px 0px #339966 !important;
+}
+
+.cl-activeDeviceIcon {
+  color: #339966 !important;
+}
+
+/* Avatar in Profile */
+.cl-avatarBox {
+  border: 2px solid #111111 !important;
+  border-radius: 9999px !important;
+  box-shadow: 2px 2px 0px 0px #339966 !important;
+}
+
+/* Danger / Destructive Section in Security */
+.cl-dangerSection,
+.cl-profileSection__danger {
+  border: 2px solid #ef4444 !important;
+  box-shadow: 4px 4px 0px 0px #ef4444 !important;
+}
+
+.cl-dangerSection .cl-profileSectionTitle,
+.cl-profileSection__danger .cl-profileSectionTitle {
+  border-bottom: 2px solid #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+.cl-formButtonReset[data-variant="danger"],
+.cl-formButtonPrimary[data-variant="danger"] {
+  background-color: #ef4444 !important;
+  border: 2px solid #111111 !important;
+  color: #ffffff !important;
+  box-shadow: 3px 3px 0px 0px #111111 !important;
+}
+
+.cl-formButtonPrimary[data-variant="danger"]:hover {
+  background-color: #111111 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+}

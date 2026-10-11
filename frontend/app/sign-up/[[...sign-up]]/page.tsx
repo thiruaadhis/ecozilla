@@ -45,7 +45,7 @@ export default function SignUpPage() {
               colorInputBackground: '#F8F9FA',
               colorInputText: '#111111',
               borderRadius: '0px', 
-            },
+            } as any,
             elements: {
               card: "border-2 border-[#111111] shadow-[8px_8px_0px_0px_#339966,16px_16px_0px_0px_#111111] p-8",
               headerTitle: "text-3xl font-black tracking-tighter uppercase text-[#111111]",
