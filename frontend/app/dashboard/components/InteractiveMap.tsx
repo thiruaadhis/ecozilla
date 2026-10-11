@@ -1,14 +1,15 @@
 "use client";
 
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 
-interface CenterTrackerProps {
+interface InteractiveMapProps {
   onCenterChange: (coords: { lat: string; lng: string }) => void;
+  targetCoords?: { lat: number; lng: number; zoom?: number } | null;
 }
 
-function CenterTracker({ onCenterChange }: CenterTrackerProps) {
+function CenterTracker({ onCenterChange }: { onCenterChange: (coords: { lat: string; lng: string }) => void }) {
   const map = useMapEvents({
     moveend: () => {
       const center = map.getCenter();
@@ -24,9 +25,26 @@ function CenterTracker({ onCenterChange }: CenterTrackerProps) {
   return null;
 }
 
-export default function InteractiveMap({ onCenterChange }: CenterTrackerProps) {
+function MapController({ targetCoords }: { targetCoords?: { lat: number; lng: number; zoom?: number } | null }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (targetCoords) {
+      map.flyTo([targetCoords.lat, targetCoords.lng], targetCoords.zoom || 11, {
+        duration: 1.6,
+        easeLinearity: 0.25,
+      });
+    }
+  }, [targetCoords, map]);
+
+  return null;
+}
+
+export default function InteractiveMap({ onCenterChange, targetCoords }: InteractiveMapProps) {
+  const LeafletMap = MapContainer as any;
+
   return (
-    <MapContainer 
+    <LeafletMap 
       center={[-3.4653, -62.2159]} 
       zoom={5} 
       zoomControl={false}
@@ -37,6 +55,7 @@ export default function InteractiveMap({ onCenterChange }: CenterTrackerProps) {
         url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" 
       />
       <CenterTracker onCenterChange={onCenterChange} />
-    </MapContainer>
+      <MapController targetCoords={targetCoords} />
+    </LeafletMap>
   );
 }
