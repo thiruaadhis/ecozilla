@@ -9,7 +9,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from torchvision import transforms
-from model.unet import UNet
+import sys
+from pathlib import Path
+
+BACKEND_DIR = Path(__file__).resolve().parent
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
+
+try:
+    from model.unet import UNet
+except ModuleNotFoundError:
+    from backend.model.unet import UNet
 
 ee.Initialize(project='ecozilla-511204')
 
@@ -25,8 +35,12 @@ app.add_middleware(
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+weights_path = BACKEND_DIR / 'model' / 'weights' / 'ecozilla_v6_gpu.pth'
+if not weights_path.exists():
+    weights_path = Path('model/weights/ecozilla_v6_gpu.pth')
+
 model = UNet()
-model.load_state_dict(torch.load('model/weights/ecozilla_v6_gpu.pth', weights_only=True))
+model.load_state_dict(torch.load(str(weights_path), map_location=device, weights_only=True))
 model.to(device)
 model.eval()
 
