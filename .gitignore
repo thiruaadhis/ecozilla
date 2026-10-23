@@ -17,9 +17,8 @@ env.bak/
 venv.bak/
 
 # --- MACHINE LEARNING WEIGHTS & DATASETS ---
-# Never push massive PyTorch / TensorFlow weights or raw GeoTIFF datasets to git!
-*.pt
-*.pth
+# .pth weights are small (25KB) so they ARE committed — do not ignore them
+# *.pth   <-- intentionally NOT ignored
 *.weights
 *.h5
 *.onnx
@@ -35,6 +34,21 @@ datasets/
 .env.production.local
 .env*.secret
 
+# --- SERVICE ACCOUNT KEYS (never commit these!) ---
+*-service-account*.json
+*-511204-*.json
+service_account*.json
+
+# --- LARGE TEST / SCRATCH IMAGES ---
+backend/test_satellite.jpg
+backend/before.png
+backend/after.png
+backend/deforestation_delta_test.png
+
+# --- AGENT / AI EDITOR METADATA ---
+frontend/AGENTS.md
+frontend/CLAUDE.md
+
 # --- IDE & SYSTEM JUNK ---
 .vscode/
 .DS_Store
@@ -43,4 +57,4 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+.pnpm-debug.log*

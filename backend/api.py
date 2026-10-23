@@ -1,6 +1,8 @@
 import cv2
 import torch
 import base64
+import json
+import os
 import numpy as np
 import ee
 import requests
@@ -9,8 +11,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from torchvision import transforms
+from dotenv import load_dotenv
 import sys
 from pathlib import Path
+
+load_dotenv()
 
 BACKEND_DIR = Path(__file__).resolve().parent
 if str(BACKEND_DIR) not in sys.path:
@@ -21,7 +26,30 @@ try:
 except ModuleNotFoundError:
     from backend.model.unet import UNet
 
-ee.Initialize(project='ecozilla-511204')
+# ---------------------------------------------------------------------------
+# Google Earth Engine Authentication
+# ---------------------------------------------------------------------------
+# On a remote server (Render, Railway, etc.) set the env var:
+#   GEE_SERVICE_ACCOUNT_JSON  →  the full contents of your service-account key JSON
+#   GEE_PROJECT               →  your GEE cloud project ID (default: ecozilla-511204)
+#
+# Locally, leave GEE_SERVICE_ACCOUNT_JSON unset and the normal ~/.config/
+# earthengine/credentials OAuth flow is used automatically.
+# ---------------------------------------------------------------------------
+_GEE_PROJECT = os.getenv("GEE_PROJECT", "ecozilla-511204")
+_sa_json_str = os.getenv("GEE_SERVICE_ACCOUNT_JSON")
+
+if _sa_json_str:
+    # Server / production: authenticate with a service account key
+    _sa_info = json.loads(_sa_json_str)
+    _credentials = ee.ServiceAccountCredentials(
+        email=_sa_info["client_email"],
+        key_data=_sa_info["private_key"],
+    )
+    ee.Initialize(credentials=_credentials, project=_GEE_PROJECT)
+else:
+    # Local dev: use the cached OAuth token from `earthengine authenticate`
+    ee.Initialize(project=_GEE_PROJECT)
 
 app = FastAPI()
 

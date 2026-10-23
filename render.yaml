@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ecozilla-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: GEE_PROJECT
+        value: ecozilla-511204
+      - key: GEE_SERVICE_ACCOUNT_JSON
+        sync: false   # You will paste this secret in the Render dashboard
+    healthCheckPath: /docs

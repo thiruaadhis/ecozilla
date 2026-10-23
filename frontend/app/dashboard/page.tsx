@@ -51,7 +51,7 @@ export default function DashboardPage() {
   const fetchTimeline = async (coords: { lat: number; lng: number }) => {
     setIsLoadingTimeline(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/timeline', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/timeline`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(coords)
@@ -83,7 +83,7 @@ export default function DashboardPage() {
     fetchTimeline(scanCoords);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/scan', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(scanCoords)
